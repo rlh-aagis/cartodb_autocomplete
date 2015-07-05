@@ -35,7 +35,7 @@
       $( ".cartodb-searchbox .text" ).autocomplete({
         source: function( request, response ) {
           var s
-          sql.execute("select adm0name, name from ne_10m_populated_places_simple_1 where name ilike '" + request.term + "%'").done(function(data) {
+          sql.execute("select carto_db, address from kcmo_parcels_6_18_2015_kiva_nbrhd where name address '" + request.term + "%'").done(function(data) {
              response(data.rows.map(function(r) {
                 return {
                   label: r.name + "," + r.adm0name,
@@ -71,13 +71,14 @@
           // create google maps map
           var mapOptions = {
             zoom: 3,
-            center: new google.maps.LatLng(43, 0),
+            center: new google.maps.LatLng(39.24, -94.53),
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
           map = new google.maps.Map(document.getElementById('map'),  mapOptions);
 
           // create layer and add to the map, then add some intera
-          cartodb.createLayer(map, 'http://documentation.cartodb.com/api/v2/viz/2b13c956-e7c1-11e2-806b-5404a6a683d5/viz.json')
+          cartodb.createLayer(map, 'https://codeforamerica.cartodb.com/u/codeforkansascity/api/v2/viz/4e032b12-1dfe-11e5-8ca7-0e49835281d6/viz.json')
+          //cartodb.createLayer(map, 'http://documentation.cartodb.com/api/v2/viz/2b13c956-e7c1-11e2-806b-5404a6a683d5/viz.json')
           .addTo(map)
           .on('done', function(layer) {
             var v = cdb.vis.Overlay.create('search', map.viz, {})
